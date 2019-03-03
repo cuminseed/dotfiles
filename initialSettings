@@ -1,0 +1,11 @@
+set -v
+./makesymlinks
+
+if [ `uname -n` = 'archlinux' ]; then
+source ./kickpacman
+else
+./kickaptget
+fi
+
+~/dotfiles/setup_zsh
+

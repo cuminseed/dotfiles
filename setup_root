@@ -1,0 +1,9 @@
+set -v 
+
+if [ `uname -n` = 'archlinux' ]; then
+pacman --noconfirm -Syu
+pacman --noconfirm -S git expect
+else
+apt-get install git expect
+fi
+

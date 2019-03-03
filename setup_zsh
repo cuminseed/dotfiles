@@ -1,0 +1,21 @@
+set -v
+
+# Jump back to a specific directory, without doing `cd ../../..` 
+# https://github.com/Tarrasch/zsh-bd
+git clone https://github.com/Tarrasch/zsh-bd
+cp zsh-bd/bd.zsh ~/dotfiles/.zsh/
+rm -rf zsh-bd
+
+# z - jump around 
+# https://github.com/rupa/z
+git clone https://github.com/rupa/z
+cp z/z.sh ~/dotfiles/.zsh/
+rm -rf z
+
+expect -c "
+spawn chsh -s `which zsh`
+expect \"Password:\"
+send \"vagrant\n\"
+expect \"~]\"
+"
+

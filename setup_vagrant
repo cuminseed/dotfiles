@@ -1,0 +1,6 @@
+set -v
+
+git clone https://github.com/cuminseed/dotfiles.git -b master
+cd ~/dotfiles
+./initialSettings
+
