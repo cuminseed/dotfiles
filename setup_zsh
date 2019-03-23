@@ -13,7 +13,7 @@ cp z/z.sh ~/dotfiles/.zsh/
 rm -rf z
 
 expect -c "
-spawn chsh -s `which zsh`
+spawn chsh $USER -s `which zsh`
 expect \"Password:\"
 send \"vagrant\n\"
 expect \"~]\"
