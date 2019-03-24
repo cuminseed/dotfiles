@@ -12,10 +12,14 @@ git clone https://github.com/rupa/z
 cp z/z.sh ~/dotfiles/.zsh/
 rm -rf z
 
+if [ $USER = vagrant ]; then
 expect -c "
 spawn chsh $USER -s `which zsh`
 expect \"Password:\"
 send \"vagrant\n\"
 expect \"~]\"
 "
+else
+chsh $USER -s `which zsh`
+fi
 
