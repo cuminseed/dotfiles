@@ -8,4 +8,3 @@ sudo apt-get install -y gdb subversion
 sudo apt-get install -y gauche guile-2.0
 sudo apt-get install -y global
 
-chsh -s `which zsh`
