@@ -4,6 +4,7 @@ if [ `uname -n` = 'archlinux' ]; then
 pacman --noconfirm -Syu
 pacman --noconfirm -S git expect
 else
+timedatectl set-timezone Asia/Tokyo
 apt-get -y update
 apt-get -y install git expect
 fi
