@@ -13,10 +13,3 @@ sudo pacman --noconfirm -S wget docker
 sudo pacman --noconfirm -S gdb subversion
 sudo pacman --noconfirm -S gauche guile
 
-cd ~
-mkdir abs
-cd abs
-git clone https://aur.archlinux.org/global.git
-cd global
-makepkg -si --noconfirm
-

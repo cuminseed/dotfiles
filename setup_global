@@ -1,0 +1,16 @@
+set -v
+
+if [ `uname -n` = 'archlinux' ]; then
+mkdir -p $HOME/abs
+cd $HOME/abs
+git clone https://aur.archlinux.org/global.git
+cd global
+makepkg -si --noconfirm
+else
+sudo apt-get install -y global
+fi
+
+# gtags plugin for vim
+mkdir -p $HOME/.vim/plugin
+cp `find /usr -name gtags.vim` $HOME/.vim/plugin
+
