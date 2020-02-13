@@ -49,6 +49,8 @@ noremap <Plug>(ToggleColorColumn)
             \ :<c-u>let &colorcolumn = len(&colorcolumn) > 0 ? '' : 81<CR>
 " ノーマルモードの 'cc' に割り当てる
 nmap cc <Plug>(ToggleColorColumn)
+" 自動開業しない
+set formatoptions=q
 
 " for gtags
 set tags=.tags;
@@ -59,4 +61,12 @@ map <C-n> :cn<CR>
 map <C-p> :cp<CR>
 "map <C-l> :Gtags -f %<CR>
 map <C-k> :Gtags -r <C-r><C-w><CR>
+
+" gdb on vim
+packadd termdebug
+set mouse=a
+let g:termdebug_wide = 163
+
+" 変更されたバッファを保存してない旨の警告をさせない
+set hidden
 
