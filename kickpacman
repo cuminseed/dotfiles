@@ -5,12 +5,9 @@ locale -a
 printf "%s\n%s\n%s\n%s\n%s" "f /etc/locale.gen" "r" "172s/^#//g" 'w!' "q" | sudo vim -e
 sudo locale-gen
 
-sudo pacman --noconfirm -S base-devel
-sudo pacman --noconfirm -S boost ncurses
-sudo pacman --noconfirm -S tmux zsh vim emacs
-sudo pacman --noconfirm -S gmock
+sudo pacman --noconfirm -S tmux zsh emacs
 sudo pacman --noconfirm -S wget docker
-sudo pacman --noconfirm -S gdb subversion
+sudo pacman --noconfirm -S gdb boost gmock
 sudo pacman --noconfirm -S gauche guile
 
 cd ~
