@@ -89,7 +89,7 @@ alias ll='ls -alFG'
 ;;
 linux*)
 alias ls='ls --color=auto'
-alias ll='ls -alF --color=auto'
+alias ll='ls -alrtF --color=auto'
 ;;
 esac
 

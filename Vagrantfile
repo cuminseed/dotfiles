@@ -12,7 +12,7 @@ Vagrant.configure("2") do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://vagrantcloud.com/search.
-  config.vm.box = "arch300"
+  config.vm.box = "archlinux/archlinux"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -83,4 +83,10 @@ Vagrant.configure("2") do |config|
   end
   # port forward
   config.ssh.forward_x11 = true
+  # scripts
+  config.vm.provision "shell", path: "syuu.sh", privileged: false
+  config.vm.provision "shell", path: "setup_root", privileged: true
+  config.vm.provision "shell", path: "setup_vagrant", privileged: false
+  config.vm.provision "shell", path: "addition.sh", privileged: false
+  config.vm.provision "shell", path: "saveSetupFiles.sh", privileged: false
 end
