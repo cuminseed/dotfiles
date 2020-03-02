@@ -2,7 +2,7 @@ set -v
 
 timedatectl set-timezone Asia/Tokyo
 locale -a
-printf "%s\n%s\n%s\n%s\n%s" "f /etc/locale.gen" "r" "172s/^#//g" 'w!' "q" | sudo ex
+printf "%s\n%s\n%s\n%s\n%s" "f /etc/locale.gen" "r" "172s/^#//g" 'w!' "q" | sudo vim -e
 sudo locale-gen
 
 sudo pacman --noconfirm -S base-devel
