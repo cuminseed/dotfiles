@@ -12,31 +12,7 @@ Vagrant.configure("2") do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://vagrantcloud.com/search.
-
-	# for archlinux
-	config.vm.define :arch do |arch|
-		arch.vm.box = "archlinux/archlinux"
-	end
-
-	# for xenial64
-	config.vm.define :xenial do |ubuntu|
-		ubuntu.vm.box = "ubuntu/xenial64"
-	end
-
-	# for zesty
-	config.vm.define :zesty do |ubuntu|
-		ubuntu.vm.box = "ubuntu/zesty64"
-	end
-
-	# for bionic
-	config.vm.define :bionic do |ubuntu|
-		ubuntu.vm.box = "ubuntu/bionic64"
-	end
-
-	# for cosmic
-	config.vm.define :cosmic do |ubuntu|
-		ubuntu.vm.box = "ubuntu/cosmic64"
-	end
+  config.vm.box = "arch300"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -68,38 +44,43 @@ Vagrant.configure("2") do |config|
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.
   # config.vm.synced_folder "../data", "/vagrant_data"
-  config.vm.synced_folder ".", "/home/vagrant/this"
-  if Vagrant::Util::Platform.windows?
-    config.vm.synced_folder "c:/drop", "/home/vagrant/drop"
-  else
-    config.vm.synced_folder "../../..", "/home/vagrant/drop"
-  end
+
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
   # Example for VirtualBox:
   #
-  config.vm.provider "virtualbox" do |vb|
+  # config.vm.provider "virtualbox" do |vb|
   #   # Display the VirtualBox GUI when booting the machine
   #   vb.gui = true
   #
-    # Customize the amount of memory on the VM:
-    vb.memory = "4096"
-  end
+  #   # Customize the amount of memory on the VM:
+  #   vb.memory = "1024"
+  # end
   #
   # View the documentation for the provider you are using for more
+
   # information on available options.
 
-  config.ssh.forward_x11 = true
-
-
   # Enable provisioning with a shell script. Additional provisioners such as
-  # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
+  # Ansible, Chef, Docker, Puppet and Salt are also available. Please see the
   # documentation for more information about their specific syntax and use.
   # config.vm.provision "shell", inline: <<-SHELL
   #   apt-get update
   #   apt-get install -y apache2
   # SHELL
 
-  config.vm.provision "shell", path: "setup_root", privileged: true
-  config.vm.provision "shell", path: "setup_vagrant", privileged: false
+  # shared directory
+  config.vm.synced_folder ".", "/home/vagrant/this"
+  if Vagrant::Util::Platform.windows?
+    config.vm.synced_folder "c:/drop", "/home/vagrant/drop"
+  else
+    config.vm.synced_folder "../../..", "/home/vagrant/drop"
+  end
+  # machine settings
+  config.vm.provider "virtualbox" do |vb|
+    vb.gui = false
+    vb.memory = "1024"
+  end
+  # port forward
+  config.ssh.forward_x11 = true
 end
