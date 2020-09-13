@@ -14,3 +14,11 @@ fi
 mkdir -p $HOME/.vim/plugin
 cp `find /usr -name gtags.vim` $HOME/.vim/plugin
 
+# .vimrc
+echo 'map <C-g> :Gtags' >> $HOME/.vim/.vimrc
+echo 'map <C-i> :Gtags -f %<CR>' >> $HOME/.vim/.vimrc
+echo 'map <C-j> :GtagsCursor<CR>' >> $HOME/.vim/.vimrc
+echo 'map <C-n> :cn<CR>' >> $HOME/.vim/.vimrc
+echo 'map <C-p> :cp<CR>' >> $HOME/.vim/.vimrc
+
+
