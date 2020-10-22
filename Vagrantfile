@@ -58,7 +58,6 @@ Vagrant.configure("2") do |config|
   # end
   #
   # View the documentation for the provider you are using for more
-
   # information on available options.
 
   # Enable provisioning with a shell script. Additional provisioners such as
@@ -69,24 +68,102 @@ Vagrant.configure("2") do |config|
   #   apt-get install -y apache2
   # SHELL
 
-  # shared directory
-  config.vm.synced_folder ".", "/home/vagrant/this"
-  if Vagrant::Util::Platform.windows?
-    config.vm.synced_folder "c:/drop", "/home/vagrant/drop"
-  else
-    config.vm.synced_folder "../../..", "/home/vagrant/drop"
-  end
-  # machine settings
-  config.vm.provider "virtualbox" do |vb|
-    vb.gui = false
-    vb.memory = "1024"
-  end
-  # port forward
-  config.ssh.forward_x11 = true
-  # scripts
-  config.vm.provision "shell", path: "syuu.sh", privileged: false
-  config.vm.provision "shell", path: "setup_root", privileged: true
-  config.vm.provision "shell", path: "setup_vagrant", privileged: false
-  config.vm.provision "shell", path: "addition.sh", privileged: false
-  config.vm.provision "shell", path: "saveSetupFiles.sh", privileged: false
+# shared directory
+	config.vm.synced_folder ".", "/home/vagrant/this"
+	if Vagrant::Util::Platform.windows?
+	config.vm.synced_folder "c:/drop", "/home/vagrant/drop"
+	else
+	config.vm.synced_folder "../../..", "/home/vagrant/drop"
+	end
+# machine settings
+	config.vm.provider "virtualbox" do |vb|
+	vb.gui = true
+	vb.memory = "1024"
+	vb.customize ['modifyvm', :id, '--cableconnected1', 'on']
+	end
+# port forward
+	config.ssh.forward_x11 = true
+
+# provision
+	config.vm.provision "shell", privileged: false, inline: <<-SHELL
+
+# timezone and locale
+sudo pacman --noconfirm -S vi
+timedatectl set-timezone Asia/Tokyo
+locale -a
+printf "%s\n%s\n%s\n%s\n%s" "f /etc/locale.gen" "r" "g/^#ja/s/^#//g" 'w!' "q" | sudo ex -e
+sudo locale-gen
+
+# update
+sudo pacman --noconfirm -Syuu
+
+# dotfiles
+sudo pacman --noconfirm -S git
+cd ~
+git clone https://github.com/cuminseed/dotfiles.git -b master
+
+# yay
+sudo pacman --noconfirm -S base-devel
+cd ~ && git clone https://aur.archlinux.org/yay
+cd yay && makepkg -si --noconfirm && cd .. && rm -rf yay
+yay -Syu --noconfirm
+
+# make symlinks
+ln -s ${HOME}/Dropbox ${HOME}/drop
+ln -s ${HOME}/drop/docs ${HOME}/docs
+ln -s ${HOME}/docs/work.org ${HOME}/work.org
+ln -s ${HOME}/dotfiles/.vim ${HOME}/.vim
+ln -s ${HOME}/dotfiles/.vimrc ${HOME}/.vimrc
+ln -s ${HOME}/dotfiles/.emacs.d ${HOME}/.emacs.d
+ln -s ${HOME}/dotfiles/.zsh ${HOME}/.zsh
+ln -s ${HOME}/dotfiles/.zshrc ${HOME}/.zshrc
+ln -s ${HOME}/dotfiles/.tmux.conf ${HOME}/.tmux.conf
+ln -s ${HOME}/dotfiles/.xinitrc ${HOME}/.xinitrc
+ln -s ${HOME}/docs/program ${HOME}/program
+ln -s ${HOME}/docs/haishin ${HOME}/haishin
+
+# copy this to that
+cd ~
+cp -a this that && rm -rf that/.vagrant
+
+# install packages
+sudo pacman --noconfirm -S tmux vim emacs
+sudo pacman --noconfirm -S wget docker
+sudo pacman --noconfirm -S gdb boost gmock global
+sudo pacman --noconfirm -S gauche guile
+sudo pacman --noconfirm -S net-tools neofetch
+sudo pacman --noconfirm -S gtkmm3
+sudo pacman --noconfirm -S xorg-xinit xorg-server xterm
+sudo pacman --noconfirm -S jq meld
+
+# dwm-git
+cd ~ && git clone https://aur.archlinux.org/dwm-git.git
+cd dwm-git && makepkg -si --noconfirm && cd .. && rm -rf dwm-git
+
+## zsh
+# install zsh and z
+sudo pacman --noconfirm -S zsh z
+
+# install bd
+cd ~ && git clone https://aur.archlinux.org/bd-git.git
+cd bd-git && makepkg -si --noconfirm && cd .. && rm -rf bd-git
+
+# chsh
+sudo pacman --noconfirm -S expect
+cd ~
+cat << EOC > changeShell.sh
+`which expect` << EOF
+spawn chsh $USER -s `which zsh`
+expect "Password:"
+send "vagrant\\r"
+expect "~]"
+exit
+EOF
+EOC
+chmod +x changeShell.sh
+./changeShell.sh
+cd ~ && rm changeShell.sh
+
+SHELL
+
 end

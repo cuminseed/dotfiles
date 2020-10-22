@@ -93,5 +93,5 @@ alias ll='ls -alrtF --color=auto'
 ;;
 esac
 
-source ~/dotfiles/.zsh/bd.zsh
-source ~/dotfiles/.zsh/z.sh
+source `pacman -Ql z | grep z.sh | awk '{ print $2 }'`
+
