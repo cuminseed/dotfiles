@@ -136,11 +136,14 @@ sudo pacman --noconfirm -S gtkmm3
 sudo pacman --noconfirm -S xorg-xinit xorg-server xterm
 sudo pacman --noconfirm -S jq meld
 
-# dwm-git
+# install dwm-git
 cd ~ && git clone https://aur.archlinux.org/dwm-git.git
-cd dwm-git && makepkg -si --noconfirm && cd .. && rm -rf dwm-git
+cd dwm-git && makepkg -si --noconfirm && cd ..
 
-## zsh
+# install st-git
+cd ~ && git clone https://aur.archlinux.org/st-git.git
+cd st-git && makepkg -si --noconfirm && cd ..
+
 # install zsh and z
 sudo pacman --noconfirm -S zsh z
 
