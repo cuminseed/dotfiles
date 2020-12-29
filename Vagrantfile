@@ -79,7 +79,7 @@ Vagrant.configure("2") do |config|
 	config.vm.provider "virtualbox" do |vb|
 	vb.gui = true
 	vb.memory = "1024"
-	vb.customize ['modifyvm', :id, '--cableconnected1', 'on']
+	vb.customize ['modifyvm', :id, '--cableconnected1', 'on', "--vram", "256"]
 	end
 # port forward
 	config.ssh.forward_x11 = true
@@ -133,7 +133,7 @@ sudo pacman --noconfirm -S gdb boost gmock global
 sudo pacman --noconfirm -S gauche guile
 sudo pacman --noconfirm -S net-tools neofetch
 sudo pacman --noconfirm -S gtkmm3
-sudo pacman --noconfirm -S xorg-xinit xorg-server xterm
+sudo pacman --noconfirm -S xorg-xinit xorg-server xterm xorg-xrandr
 sudo pacman --noconfirm -S jq meld
 
 # install dwm-git
