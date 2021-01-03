@@ -142,7 +142,18 @@ cd dwm-git && makepkg -si --noconfirm && cd ..
 
 # install st-git
 cd ~ && git clone https://aur.archlinux.org/st-git.git
-cd st-git && makepkg -si --noconfirm && cd ..
+cd st-git
+makepkg --nobuild
+sed -i -e 's/st-256color/xterm-color/g' src/st/config.def.h
+makepkg --noextract --syncdeps --install --noconfirm
+cd ..
+
+# x settings
+sed -i -e '1isetxkbmap -layout jp' ~/.xinitrc
+sed -i -e "1ixrandr --output VGA-1 --auto" ~/.xinitrc
+
+# install japanese font
+yay --noconfirm -S ttf-ricty
 
 # install zsh and z
 sudo pacman --noconfirm -S zsh z
