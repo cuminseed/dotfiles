@@ -148,12 +148,19 @@ sed -i -e 's/st-256color/xterm-color/g' src/st/config.def.h
 makepkg --noextract --syncdeps --install --noconfirm
 cd ..
 
-# x settings
-sed -i -e '1isetxkbmap -layout jp' ~/.xinitrc
-sed -i -e "1ixrandr --output VGA-1 --auto" ~/.xinitrc
-
 # install japanese font
 yay --noconfirm -S ttf-ricty
+
+# install im
+sudo pacman --noconfirm -S fcitx-mozc
+
+# x settings
+sed -i -e '1ifcitx &' ~/.xinitrc
+sed -i -e '1iexport XMODIFIERS=@im=fcitx' ~/.xinitrc
+sed -i -e '1iexport QT_IM_MODULE=fcitx' ~/.xinitrc
+sed -i -e '1iexport GTK_IM_MODULE=fcitx' ~/.xinitrc
+sed -i -e '1isetxkbmap -layout jp' ~/.xinitrc
+sed -i -e "1ixrandr --output VGA-1 --auto" ~/.xinitrc
 
 # install zsh and z
 sudo pacman --noconfirm -S zsh z
