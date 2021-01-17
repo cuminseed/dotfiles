@@ -49,6 +49,8 @@ noremap <Plug>(ToggleColorColumn)
             \ :<c-u>let &colorcolumn = len(&colorcolumn) > 0 ? '' : 81<CR>
 " ノーマルモードの 'cc' に割り当てる
 nmap cc <Plug>(ToggleColorColumn)
+" 即時実行
+silent! normal cc
 " 自動開業しない
 set formatoptions=q
 
