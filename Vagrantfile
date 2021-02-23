@@ -13,6 +13,7 @@ Vagrant.configure("2") do |config|
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://vagrantcloud.com/search.
   config.vm.box = "archlinux/archlinux"
+  #config.vm.box_version = ""
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -87,6 +88,8 @@ Vagrant.configure("2") do |config|
 # provision
 	config.vm.provision "shell", privileged: false, inline: <<-SHELL
 
+set -v
+
 # timezone and locale
 sudo pacman --noconfirm -S vi
 timedatectl set-timezone Asia/Tokyo
@@ -136,6 +139,12 @@ sudo pacman --noconfirm -S gtkmm3
 sudo pacman --noconfirm -S xorg-xinit xorg-server xterm xorg-xrandr
 sudo pacman --noconfirm -S jq meld
 
+# python
+python -m pip --version
+curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+python get-pip.py
+python -m pip install autopep8 opencv-python
+
 # install dwm-git
 cd ~ && git clone https://aur.archlinux.org/dwm-git.git
 cd dwm-git && makepkg -si --noconfirm && cd ..
@@ -145,14 +154,24 @@ cd ~ && git clone https://aur.archlinux.org/st-git.git
 cd st-git
 makepkg --nobuild
 sed -i -e 's/st-256color/xterm-color/g' src/st/config.def.h
+sed -i -e 's/Liberation Mono/Myrica M/g' src/st/config.def.h
+sed -i -e 's/pixelsize=12/pixelsize=24/g' src/st/config.def.h
 makepkg --noextract --syncdeps --install --noconfirm
 cd ..
 
 # install japanese font
-yay --noconfirm -S ttf-ricty
+yay --noconfirm -S ttf-myrica
 
 # install im
 sudo pacman --noconfirm -S fcitx-mozc
+
+# config fcitx
+fcitx -D &
+pkill fcitx
+sed -i -e 's/^\\(TriggerKey.*\\)/#\\1/' ~/.config/fcitx/config
+sed -i -e 's/^#\\(ActivateKey=\\)/\\1HENKANMODE/' ~/.config/fcitx/config
+sed -i -e 's/^#\\(InactivateKey=\\)/\\1MUHENKAN/' ~/.config/fcitx/config
+sed -i ~/.config/fcitx/config
 
 # x settings
 sed -i -e '1ifcitx &' ~/.xinitrc

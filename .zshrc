@@ -61,6 +61,7 @@ export EDITOR=vim
 export VIEWER=vim
 export SVN_EDITOR=vim
 export TERM=xterm-color
+export PATH="${PATH}:${HOME}/.local/bin"
 #export TERM=xterm-256color
 #export TERM=xterm
 export GMOCK_DIR=${HOME}/docs/program/googletest/googlemock
