@@ -80,7 +80,7 @@ Vagrant.configure("2") do |config|
 	config.vm.provider "virtualbox" do |vb|
 	vb.gui = true
 	vb.memory = "1024"
-	vb.customize ['modifyvm', :id, '--cableconnected1', 'on', "--vram", "256"]
+	vb.customize ['modifyvm', :id, '--cableconnected1', 'on', "--vram", "256", "--cpus", "4", "--ioapic", "on"]
 	end
 # port forward
 	config.ssh.forward_x11 = true
@@ -147,7 +147,11 @@ python -m pip install autopep8 opencv-python
 
 # install dwm-git
 cd ~ && git clone https://aur.archlinux.org/dwm-git.git
-cd dwm-git && makepkg -si --noconfirm && cd ..
+cd dwm-git
+makepkg --nobuild
+#sed -i -e '/^#define MODKEY/s/Mod1/Mod4/g' src/dwm/config.def.h
+makepkg --noextract --syncdeps --install --noconfirm
+cd ..
 
 # install st-git
 cd ~ && git clone https://aur.archlinux.org/st-git.git
