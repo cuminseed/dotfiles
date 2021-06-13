@@ -96,3 +96,7 @@ esac
 
 source `pacman -Ql z | grep z.sh | awk '{ print $2 }'`
 
+if [ -z "$TMUX" ]; then
+	tmux
+fi
+
