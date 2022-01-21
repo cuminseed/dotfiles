@@ -144,6 +144,7 @@ python -m pip --version
 curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
 python get-pip.py
 python -m pip install autopep8 opencv-python
+python -m pip install pyocr
 
 # install dwm-git
 cd ~ && git clone https://aur.archlinux.org/dwm-git.git
@@ -191,6 +192,9 @@ sudo pacman --noconfirm -S zsh z
 # install bd
 cd ~ && git clone https://aur.archlinux.org/bd-git.git
 cd bd-git && makepkg -si --noconfirm && cd .. && rm -rf bd-git
+
+# rust
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
 # chsh
 sudo pacman --noconfirm -S expect
